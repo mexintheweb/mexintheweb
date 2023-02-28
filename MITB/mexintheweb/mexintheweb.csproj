@@ -4,6 +4,31 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <SpaRoot>..\mexintheweb.ng\</SpaRoot>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <Target Name="PublishWebApp" BeforeTargets="CopyDistFilesToWwwroot">
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\mexintheweb.ng\**; $(SpaRoot)dist-server\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyDistFilesToWwwroot" AfterTargets="Rebuild" BeforeTargets="BeforePublish">
+    <ItemGroup>
+      <SourceFilesDist Include="$(SpaRoot)dist\mexintheweb.ng\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceFilesDist)" DestinationFolder="wwwroot\%(RecursiveDir)" OverwriteReadOnlyFiles="true" />
+  </Target>
 
 </Project>
