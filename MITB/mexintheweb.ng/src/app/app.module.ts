@@ -15,8 +15,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { MexloginComponent } from './components/private/mexlogin/mexlogin.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { APP_BASE_HREF } from '@angular/common';
 import { ApiInterceptor } from './models/http-interceptor.model';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,11 @@ import { ApiInterceptor } from './models/http-interceptor.model';
     MatIconModule,
     MatCommonModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     /*{provide: APP_BASE_HREF, useValue: '/'},*/

@@ -1,39 +1,22 @@
-<div class="container">
-    <div *ngIf="auth.isLoading === true" id="circle">
-        <div class="loader">
-            <div class="loader">
-                <div class="loader">
-                    <div class="loader">
-        
-                    </div>
-                </div>
-            </div>
-        </div>
+<div *ngIf="auth.isLoading === true" id="circle">
+    <div class="loader">
     </div>
+</div>
 
-    <form *ngIf="auth.isLoading === false && auth.isUserLoggedIn() === false">
-        <fieldset>
-            <div class="form-group" style="text-align: center;">
-                <label >Zugangsdaten eingeben</label>
-            </div>
-            <div class="form-group" style="text-align: center;">
-                <!--<label >Email</label>-->
-                <input #user class="form-control form-control-mex" type="email" placeholder="Enter email">
-            </div>
-
-            <div class="form-group" style="text-align: center;">
-                <!--<label >Password</label>-->
-                <input #pw type="password" class="form-control form-control-mex" placeholder="Password">
-            </div>
-
-            <div class="form-group" style="text-align: center;">
-                <button (click)="login(user.value, pw.value)" type="submit" class="btn btn-primary">weiter</button>
-            </div>
-
-            <div *ngIf="auth.isLoading === false && loginResult === 'failed'" class="form-group" style="text-align: center;">
-                <span style="color: red;">LOGIN FAILED</span>
-            </div>
-            
-        </fieldset>
+<div class="login-field" *ngIf="auth.isUserLoggedIn() === false">
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input #username type="email" matInput placeholder="E-Mail eingeben..." [value]="loginData.username" (keyup)="loginData.username=username.value">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Passwort</mat-label>
+            <input #password type="password" matInput placeholder="*********" [value]="loginData.password" (keyup)="loginData.password=password.value">
+        </mat-form-field>
+        <button *ngIf="loginData.username === '' || loginData.password === ''" mat-raised-button disabled>Login</button>
+        <button *ngIf="loginData.username !== '' && loginData.password !== ''" mat-raised-button color="primary" (click)="login(loginData.username, password.value)">Login</button>
+        <div *ngIf="auth.isLoading === false && loginResult === 'failed'" class="form-group" style="text-align: center; margin-top: 10px;">
+            <span style="color: red;">LOGIN FAILED</span>
+        </div>
     </form>
 </div>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { LoginResponseModel } from '../models/login-response.model';
 import { LoginModel } from '../models/login.model';
 
@@ -51,11 +52,16 @@ export class AuthService {
           this.httpHeaders = this.httpHeaders.set('JsonWebToken', token); //.set('JsonWebToken', token);
           this.httpHeaders = this.httpHeaders.set('LoginUserName', loginUser); //this.httpHeaders.set('LoginUserName', loginUser);
 
-          this.router.navigate(['/private/menu']);
+          //this.router.navigate(['/private/menu']);
+          this.router.navigate(['/']);
         }
 
         this.isLoading = false;
       }
+      this.isLoading = false;
+    },
+    error =>
+    {
       this.isLoading = false;
     })
   }
