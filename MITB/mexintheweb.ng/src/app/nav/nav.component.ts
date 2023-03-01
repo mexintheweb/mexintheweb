@@ -7,6 +7,15 @@ import { Component } from '@angular/core';
 })
 export class NavComponent {
   isExpanded = false;
+  public navigationEntries: NavigationEntryModel[] = new Array<NavigationEntryModel>();
+
+  constructor() {
+    this.navigationEntries = new Array<NavigationEntryModel>();
+    this.navigationEntries.push({linkRoute: '/', linkText: 'home'});
+    this.navigationEntries.push({linkRoute: '/mexlogin', linkText: 'login'});
+    this.navigationEntries.push({linkRoute: '/about', linkText: 'über mich'});
+    this.navigationEntries.push({linkRoute: '/impressum', linkText: 'impressum'});
+  }
 
   collapse() {
     this.isExpanded = false;
@@ -15,4 +24,9 @@ export class NavComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+}
+
+export class NavigationEntryModel {
+  public linkRoute: string | undefined;
+  public linkText: string | undefined;
 }

@@ -1,5 +1,6 @@
-using mexintheweb.Data;
 using mexintheweb.Models.Identity;
+using mexintheweb.Services;
+using mexintheweb.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -58,15 +59,21 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+// Services registrieren
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 // WebApp Einstellungen
 var app = builder.Build();
+var loginService = app.Services.CreateScope().ServiceProvider.GetRequiredService<ILoginService>();
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseMiddleware<BasicAuthMiddleware>(loginService);
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseCors("corsapp");
 
 using (var scope = app.Services.CreateScope())
@@ -74,6 +81,9 @@ using (var scope = app.Services.CreateScope())
     var dataContext = scope.ServiceProvider.GetRequiredService<AuthIdentityDbContext>();
     dataContext.Database.Migrate();
 }
+
+var adminService = app.Services.CreateScope().ServiceProvider.GetRequiredService<IAdminService>();
+await adminService.CreateAdminAccount();
 
 //app.MapGet("/", () => "Hello World!");
 

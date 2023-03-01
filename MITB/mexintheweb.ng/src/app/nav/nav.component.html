@@ -1,32 +1,19 @@
-<p>nav works!</p>
-<nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" >mexintheweb.net</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item" >
-            <a class="nav-link text-dark" routerLink="/" (click)="toggle()">home</a>
-          </li>
-          <li class="nav-item" >
-            <a class="nav-link text-dark" routerLink="/about" (click)="toggle()">über mich</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<mat-toolbar class="navbar">
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="nav-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let link of navigationEntries" routerLink="{{link.linkRoute}}">{{link.linkText}}</button>
+  </mat-menu>
+
+  <span>mexintheweb</span>
+  <span class="spacer"></span>
+  <div class="nav-line">
+    <a mat-button *ngFor="let link of navigationEntries" routerLink="{{link.linkRoute}}">{{link.linkText}}</a>
+  </div>
+  <div class="nav-icon">
+    <span>Test</span>
+  </div>
+  
+</mat-toolbar>

@@ -15,9 +15,33 @@ a.navbar-brand {
     html {
       font-size: 16px;
     }
+
+    .nav-icon {
+      display: none;
+    }
+
+    .nav-line {
+      display: block;
+    }
   }
+
+  @media (max-width: 767px) {
+
+    .nav-icon {
+      display: block;
+    }
+
+    .nav-line {
+      display: none;
+    }
+  }
+
   
   .box-shadow {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  }
+
+  .spacer {
+    flex: 1 1 auto;
   }
   
